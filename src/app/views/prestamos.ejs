@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prestamos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a href="/" class="navbar-brand mx-auto">Biblioteca R.A.</a>
+        <a href="/socios" class="nav-item mx-1">Socios</a>
+        <a href="/libros" class="nav-item mx-1">Libros</a>
+        <a href="/empleados" class="nav-item mx-1">Empleados</a>
+        <a href="/prestamos" class="nav-item mx-1">Lista de prestamos</a>
+        <a href="/autores" class="nav-item mx-1">Lista de autores</a>
+        <a href="/generos" class="nav-item mx-1">Lista de generos</a>
+        <a href="/cargos" class="nav-item mx-1">Lista de cargos</a>
+    </nav>
+    <div class="container">
+        <div class="col-md-6 mt-4 card">
+            <form action="/agregar_prestamo" method="post" class="card-body">
+                <h3 class="card-title">Solicitar prestamo</h3>
+                <div class="form-group mt-4">
+                    <label>ID Empleado</label>
+                    <input type="text" name="id_empleado_prestamo" class="form-control">
+                </div>
+                <div class="form-group mt-4">
+                    <label>ID Libro</label>
+                    <input type="text" name="id_libro_prestamo" class="form-control">
+                </div>
+                <div class="form-group mt-4">
+                    <label>ID Socio</label>
+                    <input type="text" name="id_socio_prestamo" class="form-control">
+                </div>
+                <input type="submit" class="btn btn-primary my-4" value="Guardar">
+            </form>
+        </div>
+
+        <div class="col-md-6 mt-4 text-center">
+            <h1 class="card-title text-center my-5">Prestamos</h1>
+            <table class="table table-stripped">
+                <tr>
+                    <th>ID Prestamo</th>
+                    <th>ID Empleado</th>
+                    <th>ID Socio</th>
+                    <th>ID Libro</th>
+                </tr>
+                <% for(var i=0;i<prestamos.length;i++) { %>
+                <tr>
+                    <td><%= prestamos[i].id_prestamo %></td>
+                    <td><%= prestamos[i].id_empleado_prestamo %></td>
+                    <td><%= prestamos[i].id_socio_prestamo %></td>
+                    <td><%= prestamos[i].id_libro_prestamo %></td>
+                   
+                    <td>
+                        <a href="/devolucion/<%= prestamos[i].id_prestamo %>" class="btn btn-danger">BORRAR</a>
+                        <a href="/editar_prestamo/<%= prestamos[i].id_prestamo %>" class="btn btn-danger">EDITAR</a>
+                    </td>
+                </tr>
+                <% } %> 
+            </table>
+        </div>
+</body>
+</html>
