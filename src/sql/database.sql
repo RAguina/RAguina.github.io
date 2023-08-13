@@ -1,5 +1,5 @@
-CREATE DATABASE libreriaAguinagalde5;
-USE libreriaAguinagalde5;
+CREATE DATABASE libreriaAguinagalde6;
+USE libreriaAguinagalde6;
 
 
 CREATE TABLE socios(
@@ -44,13 +44,13 @@ CREATE TABLE autores(
     nombre VARCHAR (50),
     apellido VARCHAR (50)
 );
-
+/*
 CREATE TABLE ejemplares(
     id_ejemplar INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     estado VARCHAR (100),
     prestado BOOLEAN
 );
-
+*/
 CREATE TABLE generos(
     id_genero INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     nombre VARCHAR (50)

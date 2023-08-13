@@ -6,6 +6,6 @@ module.exports = () => {
 		user: 'root',
 		insecureAuth : true,
 		password: 'root',
-		database: 'libreriaAguinagalde5'
+		database: 'libreriaAguinagalde6'
 	});
 }

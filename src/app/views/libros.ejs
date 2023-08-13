@@ -41,10 +41,6 @@
                 <label>Reseña</label>
                 <input type="text" name="resena" class="form-control">
             </div>
-            <div class="form-group mt-4">
-                <label>Cantidad ejemplares</label>
-                <input type="text" name="ejemplares" class="form-control">
-            </div>
             <input type="submit" class="btn btn-primary my-4" value="Guardar">
         </form>
     </div>
@@ -58,6 +54,7 @@
                 <th>ID</th>
                 <th>Nombre Libro</th>
                 <th>Autor</th>
+                <th>Genero</th>
             </tr>
             <% for(var i=0;i<libros.length;i++) { %>
             <tr>
@@ -65,9 +62,16 @@
                 <td><%= libros[i].titulo %></td>
                 <% const autor = autores.find(a => a.id_autor === libros[i].autor); %>
                     <% if (autor) { %>
-                        <td><%= autor.nombre %></td>
+                        <td><%= autor.nombre %> <%= autor.apellido %></td>
                     <% } else { %>
                         <td>No se encontró el autor</td>
+                    <% } %>
+
+                    <% const genero = generos.find(a => a.id_genero === libros[i].genero); %>
+                    <% if (genero) { %>
+                        <td><%= genero.nombre %> <%= genero.apellido %></td>
+                    <% } else { %>
+                        <td>No se encontró el genero</td>
                     <% } %>
                 <td>
                     <a href="/borrar_libro/<%= libros[i].id_libro %>" class="btn btn-danger">BORRAR</a>

@@ -58,20 +58,40 @@ app.get('/borrar_socio/:id', (req, res)=> {
     }) 
 });
 //********************************************************************************* */
-app.post('/editar_socio', (req,res)=> {    
-   
-    const id = req.body.id;
-    const nombre = req.body.nombre;  
-    const apellido = req.body.apellido;  
-    const dni = req.body.dni;  
-    const telefono = req.body.telefono;  
-    const email = req.body.email;  
-    const nacimiento = req.body.nacimiento;  
-    const alta = req.body.alta;   
-    
-    const query = 'UPDATE socios SET nombre = ?, apellido = ?, dni = ?, telefono = ?, email = ?, fecha_nacimiento = ?, fecha_alta = ?  WHERE id_socio = ?';
 
-    conexion.query(query, [nombre, apellido, dni, telefono, email, nacimiento, alta, id], (err, result) => {
+app.get('/editar_socio/:id', (req,res)=>{
+    const id = req.params.id;
+   
+    const query='SELECT * FROM socios WHERE id_socio = ?';
+    conexion.query(query,[id],(err,result)=>{
+        if(err){
+            console.error('Error al editar el registro: ', err);
+            res.status(500).send('Error al editar el registro');
+        }else{
+            console.log('Registro editado correctamente');
+            res.render('editar_socio',{
+            socio:result[0]
+            });
+        }
+    });
+});
+
+
+
+app.post('/editar_socio/:id', (req,res)=> {    
+   
+    const id = req.params.id;
+    const nombre = req.body.editar_socio_nombre;  
+    const apellido = req.body.editar_socio_apellido;  
+    const dni = req.body.editar_socio_dni;  
+    const telefono = req.body.editar_socio_telefono;  
+    const email = req.body.editar_socio_email;  
+    //const nacimiento = req.body.nacimiento;  
+    //const alta = req.body.alta;   
+    
+    const query = 'UPDATE socios SET nombre = ?, apellido = ?, dni = ?, telefono = ?, email = ?  WHERE id_socio = ?';
+
+    conexion.query(query, [id, nombre, apellido, dni, telefono, email], (err, result) => {
         if(err) {
             console.error('Error al editar registro: ', err);
             res.status(500).send('Error al editar el registro');
@@ -82,6 +102,7 @@ app.post('/editar_socio', (req,res)=> {
     })
     
 });
+
 //********************************************************************************* */
 app.get('/empleados', (req,res)=>{
     conexion.query('SELECT * FROM empleados', (err, result)=> {
@@ -125,25 +146,86 @@ app.post('/agregar_empleado', (req,res)=> {
     })
     
 });
-//********************************************************************************* */
-app.post('/editar_empleado', (req,res)=> {   
-    console.log(req.body);   
+
+app.get('/editar_empleados/:id', (req,res)=>{
+    const id = req.params.id;
+    conexion.query('SELECT * FROM empleados WHERE id_empleado = ?', [id], (err, result)=> {
+        if (err) {
+            console.log('Error al consultar los empleados', err);
+            res.status(500).send('Error al consultar los empleados');
+        } else {
+            const cargos = conexion.query('SELECT * FROM cargos', (err, result2)=> {
+                if (err) {
+                    console.log('Error al consultar los cargos', err);
+                    res.status(500).send('Error al consultar los cargos');
+                } else {
+                    res.render('editar_empleados.ejs', {
+                        empleado: result[0],
+                        cargos: result2
+                    });
+                }
+            });
+        }
+    });
+});
+
+/*
+app.get('/editar_empleados/:id', (req,res)=>{
+    conexion.query('SELECT * FROM empleados', (err, result)=> {
+        if (err) {
+            console.log('Error al consultar los empleados', err);
+            res.status(500).send('Error al consultar los empleados');
+        } else {
+            const cargos = conexion.query('SELECT * FROM cargos', (err, result2)=> {
+                if (err) {
+                    console.log('Error al consultar los cargos', err);
+                    res.status(500).send('Error al consultar los cargos');
+                } else {
+                    res.render('editar_empleados.ejs', {
+                        empleados: result[0],
+                        cargos: result2
+                    });
+                }
+            });
+        }
+    });
+});
+*/
+/*
+app.get('/editar_empleados/:id', (req,res)=>{
+    const id = req.params.id;
    
+    const query='SELECT * FROM empleados WHERE id_empleado = ?';
+    conexion.query(query,[id],(err,result)=>{
+        if(err){
+            console.error('Error al editar el registro: ', err);
+            res.status(500).send('Error al editar el registro');
+        }else{
+            console.log('Registro editado correctamente');
+            res.render('editar_empleados',{
+            empleado:result[0]
+            });
+        }
+    });
+});
+*/
 
-    const empleadoId = req.body.empleadoId;
-    const nombre = req.body.nombre;
-    const apellido = req.body.apellido;
-    const cargo = req.body.cargo;
+app.post('/editar_empleados/:id', (req,res)=> {   
+    const id = req.params.id;
+    const nombre = req.body.editar_empleado_nombre;
+    const apellido = req.body.editar_empleado_apellido;
+    const cargo = req.body.editar_empleado_cargo;
 
+    
     const query = 'UPDATE empleados SET nombre = ?, apellido = ?, cargo = ? WHERE id_empleado = ?';
 
-    conexion.query(query, [nombre, apellido, cargo, empleadoId], (err, result) => {
+    conexion.query(query, [id,nombre,apellido,cargo], (err, result) => {
         if(err) {
             console.error('Error al editar registro: ', err);
             res.status(500).send('Error al editar el registro');
         } else {
             console.log('Registros editado correctamente');
-            res.redirect('/empleado');
+            res.redirect('/editar_empleados');
         }
     })
     
@@ -315,8 +397,9 @@ app.post('/editar_libros/:id', (req,res)=> {
     const resena = req.body.editar_libro_resena;
     const autor = req.body.editar_libro_autor;
     const genero = req.body.editar_libro_generoliterario;
+    const ejemplares = req.body.editar_libro_ejemplares;
     
-    const query = 'UPDATE libros SET titulo = ?, isbn = ?, resena = ?, autor = ?, genero = ? WHERE id_libro = ?';
+    const query = 'UPDATE libros SET titulo = ?, isbn = ?, resena = ?, autor = ?, genero = ?, ejemplares =? WHERE id_libro = ?';
 
     conexion.query(query, [titulo, isbn, resena, autor, genero, id], (err, result) => {
         if(err) {
@@ -530,8 +613,24 @@ app.post('/agregar_prestamo', (req,res)=> {
 });
 //********************************************************************************* */
 
-/*editar prestamo con post*/
-app.post('/editar_prestamo', (req,res)=> {           
+app.get('/editar_prestamo/:id', (req,res)=>{
+    const id = req.params.id;
+   
+    const query='SELECT * FROM prestamos WHERE id_prestamo = ?';
+    conexion.query(query,[id],(err,result)=>{
+        if(err){
+            console.error('Error al editar el registro: ', err);
+            res.status(500).send('Error al editar el registro');
+        }else{
+            console.log('Registro editado correctamente');
+            res.render('editar_prestamo',{
+            prestamo:result[0]
+            });
+        }
+    });
+});
+
+app.post('/editar_prestamo/:id', (req,res)=> {           
 
     const id = req.body.id_prestamo;
     const empleado = req.body.id_empleado_prestamo_editar;
@@ -547,7 +646,7 @@ app.post('/editar_prestamo', (req,res)=> {
             res.status(500).send('Error al editar el registro');
         } else {
             console.log('Registros editado correctamente');
-            res.redirect('/prestamos');
+            res.redirect('/editar_prestamo');
         }
     })
     

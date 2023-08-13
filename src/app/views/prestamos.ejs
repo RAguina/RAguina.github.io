@@ -37,46 +37,48 @@
                 <input type="submit" class="btn btn-primary my-4" value="Guardar">
             </div>
         
-        <div class="col-md-6 mt-4 card">
-            </form>
-            <form action="/editar_prestamo" method="post" class="card-body">
-                <h3 class="card-title">Editar (En construccion)</h3>
-                <div class="form-group mt-4">
-                    <label>ID Empleado</label>
-                    <input type="text" name="id_empleado_prestamo_editar" class="form-control">
-                </div>
-                <div class="form-group mt-4">
-                    <label>ID Libro</label>
-                    <input type="text" name="id_libro_prestamo_editar" class="form-control">
-                </div>
-                <div class="form-group mt-4">
-                    <label>ID Socio</label>
-                    <input type="text" name="id_socio_prestamo_editar" class="form-control">
-                </div>
-                <input type="submit" class="btn btn-primary my-4" value="Guardar">
-            </form>
-            </div>
+
         </div>
         </div>
 
-        <div class="col-md-6 mt-4 text-center">
+        <div class="mt-4 text-center">
             <h1 class="card-title text-center my-5">Prestamos</h1>
             <table class="table table-stripped">
                 <tr>
                     <th>ID Prestamo</th>
-                    <th>ID Empleado</th>
-                    <th>ID Socio</th>
-                    <th>ID Libro</th>
+                    <th>Nombre Empleado</th>
+                    <th>Nombre Socio</th>
+                    <th>Titulo Libro</th>
                 </tr>
                 <% for(var i=0;i<prestamos.length;i++) { %>
                 <tr>
                     <td><%= prestamos[i].id_prestamo %></td>
-                    <td><%= prestamos[i].id_empleado_prestamo %></td>
-                    <td><%= prestamos[i].id_socio_prestamo %></td>
-                    <td><%= prestamos[i].id_libro_prestamo %></td>
+
+                   
+                    <% const empleado = empleados.find(a => a.id_empleado === prestamos[i].id_empleado_prestamo); %>
+                    <% if (empleado) { %>
+                    <td><%= empleado.nombre %> <%= empleado.apellido %></td>
+                    <% } else { %>
+                    <td>No se encontró el empleado</td>
+                    <% } %>
+
+                    <% const socio = socios.find(a => a.id_socio === prestamos[i].id_socio_prestamo); %>
+                    <% if (socio) { %>
+                    <td><%= socio.nombre %> <%= socio.apellido %></td>
+                    <% } else { %>
+                    <td>No se encontró el socio</td>
+                    <% } %>
+
+                    <% const libro = libros.find(a => a.id_libro === prestamos[i].id_libro_prestamo); %>
+                    <% if (libro) { %>
+                        <td><%= libro.titulo %></td>
+                    <% } else { %>
+                        <td>No se encontró el libro</td>
+                    <% } %>
+
                    
                     <td>
-                        <a href="/devolucion/<%= prestamos[i].id_prestamo %>" class="btn btn-danger">BORRAR</a>
+                        <a href="/devolucion/<%= prestamos[i].id_prestamo %>" class="btn btn-danger">DEVOLVER</a>
                         <a href="/editar_prestamo/<%= prestamos[i].id_prestamo %>" class="btn btn-danger">EDITAR</a>
                     </td>
                 </tr>

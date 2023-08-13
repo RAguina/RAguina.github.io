@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Libros</title>
+    <title>Editar Empleado</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
 </head>
 <body>
@@ -19,28 +19,29 @@
     </nav>
 
     <div class="col-md-6 mt-4 card">
-        <form action="/editar_libros/<%= libro.id_libro %>" name="nombre" method="post" class="card-body">
-            <h3 class="card-title">Editar Libro</h3>
+        <form action="/editar_socio/<%= socio.id_socio %>" name="nombre" method="post" class="card-body">
+            <h3 class="card-title">Editar Socio</h3>
             <div class="form-group mt-4">
-                <label>Titulo</label>
-                <input type="text" name="editar_libro_titulo" value="<%= libro.titulo %>" class="form-control">
+                <label>Nombre</label>
+                <input type="text" name="editar_socio_nombre" value="<%= socio.nombre %>" class="form-control">
             </div>
             <div class="form-group mt-4">
-                <label>Autor(Int)</label>
-                <input type="text" name="editar_libro_autor" value="<%= libro.autor %>"class="form-control">
+                <label>Apellido</label>
+                <input type="text" name="editar_socio_apellido" value="<%= socio.apellido %>"class="form-control">
             </div>
             <div class="form-group mt-4">
-                <label>ISBN</label>
-                <input type="text" name="editar_libro_isbn" value="<%= libro.isbn %>"class="form-control">
+                <label>DNI</label>
+                <input type="text" name="editar_socio_dni" value="<%= socio.dni %>"class="form-control">
             </div>
             <div class="form-group mt-4">
-                <label>Genero(Int)</label>
-                <input type="text" name="editar_libro_generoliterario" value="<%= libro.genero %>"class="form-control">
+                <label>Telefono</label>
+                <input type="text" name="editar_socio_telefono" value="<%= socio.telefono %>"class="form-control">
             </div>
             <div class="form-group mt-4">
-                <label>Reseña</label>
-                <input type="text" name="editar_libro_resena" value="<%= libro.resena %>"class="form-control">
+                <label>Email</label>
+                <input type="text" name="editar_socio_email" value="<%= socio.email %>"class="form-control">
             </div>
+        
             <input type="submit" class="btn btn-primary my-4" value="Confirmar Cambios">
         </form>
     </div>
