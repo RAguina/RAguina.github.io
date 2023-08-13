@@ -290,13 +290,31 @@ app.get('/borrar_libro/:id', (req, res)=> {
     }) 
 });
 //********************************************************************************* */
-app.post('/editar_libros', (req,res)=> {   
-    const id = req.body.id;
-    const titulo = req.body.titulo;
-    const isbn = req.body.isbn;
-    const resena = req.body.resena;
-    const autor = req.body.autor;
-    const genero = req.body.generoliterario;
+app.get('/editar_libros/:id', (req,res)=>{
+    const id = req.params.id;
+   
+    const query='SELECT * FROM libros WHERE id_libro = ?';
+    conexion.query(query,[id],(err,result)=>{
+        if(err){
+            console.error('Error al editar el registro: ', err);
+            res.status(500).send('Error al editar el registro');
+        }else{
+            console.log('Registro editado correctamente');
+            res.render('editar_libros',{
+            libro:result[0]
+            });
+        }
+    });
+});
+
+
+app.post('/editar_libros/:id', (req,res)=> {   
+    const id = req.params.id;
+    const titulo = req.body.editar_libro_titulo;
+    const isbn = req.body.editar_libro_isbn;
+    const resena = req.body.editar_libro_resena;
+    const autor = req.body.editar_libro_autor;
+    const genero = req.body.editar_libro_generoliterario;
     
     const query = 'UPDATE libros SET titulo = ?, isbn = ?, resena = ?, autor = ?, genero = ? WHERE id_libro = ?';
 
@@ -511,15 +529,17 @@ app.post('/agregar_prestamo', (req,res)=> {
     })       
 });
 //********************************************************************************* */
+
+/*editar prestamo con post*/
 app.post('/editar_prestamo', (req,res)=> {           
 
-    const id = req.body.id;
-    const empleado = req.body.empleadoId;
-    const libro = req.body.libro;
-    const socio = req.body.socio;
+    const id = req.body.id_prestamo;
+    const empleado = req.body.id_empleado_prestamo_editar;
+    const libro = req.body.id_libro_prestamo_editar;
+    const socio = req.body.id_socio_prestamo_editar;
     const fecha = req.body.fecha;
     
-    const query = 'UPDATE prestamos SET id_empleado = ?, id_libro = ? , id_socio = ? , fecharetiro = ?  WHERE id_prestamo = ?';
+    const query = 'UPDATE prestamos SET id_empleado_prestamo_editar = ?, id_libro = ? , id_socio = ? , fecharetiro = ?  WHERE id_prestamo = ?';
 
     conexion.query(query, [empleado, libro, socio, fecha, id], (err, result) => {
         if(err) {

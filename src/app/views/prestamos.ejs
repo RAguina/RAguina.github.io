@@ -18,6 +18,7 @@
         <a href="/cargos" class="nav-item mx-1">Lista de cargos</a>
     </nav>
     <div class="container">
+        <div class="row">
         <div class="col-md-6 mt-4 card">
             <form action="/agregar_prestamo" method="post" class="card-body">
                 <h3 class="card-title">Solicitar prestamo</h3>
@@ -34,7 +35,28 @@
                     <input type="text" name="id_socio_prestamo" class="form-control">
                 </div>
                 <input type="submit" class="btn btn-primary my-4" value="Guardar">
+            </div>
+        
+        <div class="col-md-6 mt-4 card">
             </form>
+            <form action="/editar_prestamo" method="post" class="card-body">
+                <h3 class="card-title">Editar (En construccion)</h3>
+                <div class="form-group mt-4">
+                    <label>ID Empleado</label>
+                    <input type="text" name="id_empleado_prestamo_editar" class="form-control">
+                </div>
+                <div class="form-group mt-4">
+                    <label>ID Libro</label>
+                    <input type="text" name="id_libro_prestamo_editar" class="form-control">
+                </div>
+                <div class="form-group mt-4">
+                    <label>ID Socio</label>
+                    <input type="text" name="id_socio_prestamo_editar" class="form-control">
+                </div>
+                <input type="submit" class="btn btn-primary my-4" value="Guardar">
+            </form>
+            </div>
+        </div>
         </div>
 
         <div class="col-md-6 mt-4 text-center">
