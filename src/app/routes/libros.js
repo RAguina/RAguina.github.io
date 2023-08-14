@@ -87,7 +87,7 @@ app.post('/editar_socio/:id', (req,res)=> {
     const telefono = req.body.editar_socio_telefono;  
     const email = req.body.editar_socio_email;  
     //const nacimiento = req.body.nacimiento;  
-    //const alta = req.body.alta;   
+      
     
     const query = 'UPDATE socios SET nombre = ?, apellido = ?, dni = ?, telefono = ?, email = ?  WHERE id_socio = ?';
 
@@ -632,13 +632,13 @@ app.get('/editar_prestamo/:id', (req,res)=>{
 
 app.post('/editar_prestamo/:id', (req,res)=> {           
 
-    const id = req.body.id_prestamo;
+    const id = req.params.id;
     const empleado = req.body.id_empleado_prestamo_editar;
     const libro = req.body.id_libro_prestamo_editar;
     const socio = req.body.id_socio_prestamo_editar;
     const fecha = req.body.fecha;
     
-    const query = 'UPDATE prestamos SET id_empleado_prestamo_editar = ?, id_libro = ? , id_socio = ? , fecharetiro = ?  WHERE id_prestamo = ?';
+    const query = 'UPDATE prestamos SET id_empleado_prestamo = ?, id_libro_prestamo = ? , id_socio_prestamo = ? , fecharetiro = ?  WHERE id_prestamo = ?';
 
     conexion.query(query, [empleado, libro, socio, fecha, id], (err, result) => {
         if(err) {
@@ -646,7 +646,7 @@ app.post('/editar_prestamo/:id', (req,res)=> {
             res.status(500).send('Error al editar el registro');
         } else {
             console.log('Registros editado correctamente');
-            res.redirect('/editar_prestamo');
+            res.redirect('/prestamos');
         }
     })
     

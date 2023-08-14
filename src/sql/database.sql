@@ -8,7 +8,7 @@ CREATE TABLE socios(
     apellido VARCHAR (50),
     telefono VARCHAR (50),
     dni VARCHAR (50),
-    email VARCHAR (50),
+    email VARCHAR (500),
     fecha_nacimiento DATE,
     fecha_alta DATE
 );
