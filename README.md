@@ -10,7 +10,7 @@ libreriaAguinagalde5
 root
 root
 
-
+Cambios Version "0.4" Se implementaron los cambios pertinentes para editar un prestamo, editar un empleado, editar un libro y editar un socio. Se modificaron tambien algunas partes de UI.
 
 
 
