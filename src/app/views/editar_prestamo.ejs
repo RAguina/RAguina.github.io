@@ -35,17 +35,15 @@
                 </div>
                 <input type="submit" class="btn btn-primary my-4" value="Guardar">
             </form>
-            <span>LEYENDA LIBROS</span>
+            <span class="fw-bold">LEYENDA LIBROS</span>
             <% for(var i=0;i<libros.length;i++) { %>
                 <tr>
-                    <td>LIBRO: <strong></LIBRO:><%= libros[i].id_libro %></strong></td>
-                    <td><br>TITULO LIBRO: <strong><%= libros[i].titulo %></strong> AUTOR ID: <strong><%= libros[i].autor %>  <%= libros[i].nombre %></strong></td>
+                    <td>LIBRO: "<%= libros[i].id_libro %>"</td>
+                    <td>TITULO LIBRO: "<%= libros[i].titulo %>" AUTOR ID: "<%= libros[i].autor %>"  <%= libros[i].nombre %></strong></td>
                 </tr>
                 <p>------------------------------------------</p>
             <% } %>
             </div>
-            
-
 
 
 </body>
