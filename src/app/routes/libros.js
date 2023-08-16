@@ -8,6 +8,18 @@ app.get('/', (req,res)=>{
     })       
     
 });
+
+
+
+//************************      FUNCION FORMATEAR FECHA     dd/mm/aaaa      ************************* */
+
+function formatDate(dateString) {
+    var fechaOriginal = new Date(dateString);
+    var dia = ("0" + fechaOriginal.getDate()).slice(-2);
+    var mes = ("0" + (fechaOriginal.getMonth() + 1)).slice(-2);
+    var anio = fechaOriginal.getFullYear();
+    return dia + "/" + mes + "/" + anio;
+  }
 //********************************************************************************* */
 
 app.get('/socios', (req,res)=>{
@@ -248,7 +260,7 @@ app.get('/borrar_empleado/:id', (req, res)=> {
     }) 
 });
 
-//********************************************************************************* */
+//*****************             CARGOS             ******************************** */
 app.get('/cargos', (req,res)=>{
     conexion.query('SELECT * FROM cargos', (err, result)=>{
         console.log(result);
@@ -289,9 +301,25 @@ app.post('/agregar_cargo', (req,res)=> {
     
 });
 //********************************************************************************* */
+app.get('/editar_cargo/:id', (req,res)=>{
+    const id = req.params.id;
+   
+    const query='SELECT * FROM cargos WHERE id_cargo = ?';
+    conexion.query(query,[id],(err,result)=>{
+        if(err){
+            console.error('Error al editar el registro: ', err);
+            res.status(500).send('Error al editar el registro');
+        }else{
+            console.log('Registro editado correctamente');
+            res.render('editar_cargo',{
+            cargo:result[0]
+            });
+        }
+    });
+});
 app.post('/editar_cargo', (req,res)=> {   
     const id = req.body.id;
-    const nombre = req.body.nombre;
+    const nombre = req.body.editar_cargo_nombre;
     
     const query = 'UPDATE cargos SET cargo = ? WHERE id_cargo = ?';
 
@@ -304,9 +332,9 @@ app.post('/editar_cargo', (req,res)=> {
             res.redirect('/cargos');
         }
     })
-    
+
 });
-//********************************************************************************* */
+//**************       LIBROS       *********************************************** */
 app.get('/libros', (req, res) => {
     conexion.query('SELECT * FROM libros', (err, result) => {
         if (err) {
@@ -388,8 +416,6 @@ app.get('/editar_libros/:id', (req,res)=>{
         }
     });
 });
-
-
 app.post('/editar_libros/:id', (req,res)=> {   
     const id = req.params.id;
     const titulo = req.body.editar_libro_titulo;
@@ -412,7 +438,7 @@ app.post('/editar_libros/:id', (req,res)=> {
     })
     
 });
-//********************************************************************************* */
+//***************       AUTORES      ********************************************** */
 app.get('/autores', (req,res)=>{
     conexion.query('SELECT * FROM autores', (err, result)=> {
         if (err) throw err;
@@ -613,18 +639,29 @@ app.post('/agregar_prestamo', (req,res)=> {
 });
 //********************************************************************************* */
 
-app.get('/editar_prestamo/:id', (req,res)=>{
+app.get('/editar_prestamo/:id', (req, res) => {
     const id = req.params.id;
    
-    const query='SELECT * FROM prestamos WHERE id_prestamo = ?';
-    conexion.query(query,[id],(err,result)=>{
-        if(err){
+    const query = 'SELECT * FROM prestamos WHERE id_prestamo = ?';
+    conexion.query(query, [id], (err, result) => {
+        if (err) {
             console.error('Error al editar el registro: ', err);
             res.status(500).send('Error al editar el registro');
-        }else{
-            console.log('Registro editado correctamente');
-            res.render('editar_prestamo',{
-            prestamo:result[0]
+        } else {
+            const queryLibros = 'SELECT libros.*, autores.id_autor, autores.nombre FROM libros LEFT JOIN autores ON libros.id_autor = autores.id_autor';
+            conexion.query(queryLibros, (err, result2) => {
+                if (err) {
+                    console.error('Error al obtener los libros: ', err);
+                    res.status(500).send('Error al obtener los libros');
+                } else {
+                    console.log('Registro editado correctamenteasdasdasdsa');
+                    console.log(result2);
+
+                    res.render('editar_prestamo', {
+                        prestamo: result[0],
+                        libros: result2
+                    });
+                }
             });
         }
     });
@@ -671,3 +708,4 @@ app.get('/devolucion/:id', (req, res)=> {
 });
 
 }
+

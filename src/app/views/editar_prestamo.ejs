@@ -18,8 +18,7 @@
         <a href="/cargos" class="nav-item mx-1">Lista de cargos</a>
     </nav>
 
-
-        <div class="col-md-6 mt-4 card">
+        <div class="col-md-6 mt-4 card" style="margin-left: 2rem;">
             <form action="/editar_prestamo/<%= prestamo.id_prestamo %>" method="post" class="card-body">
                 <h3 class="card-title">Editar Prestamo</h3>
                 <div class="form-group mt-4">
@@ -36,7 +35,16 @@
                 </div>
                 <input type="submit" class="btn btn-primary my-4" value="Guardar">
             </form>
+            <span>LEYENDA LIBROS</span>
+            <% for(var i=0;i<libros.length;i++) { %>
+                <tr>
+                    <td>LIBRO: <strong></LIBRO:><%= libros[i].id_libro %></strong></td>
+                    <td><br>TITULO LIBRO: <strong><%= libros[i].titulo %></strong> AUTOR ID: <strong><%= libros[i].autor %>  <%= libros[i].nombre %></strong></td>
+                </tr>
+                <p>------------------------------------------</p>
+            <% } %>
             </div>
+            
 
 
 
