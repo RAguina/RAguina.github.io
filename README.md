@@ -15,9 +15,11 @@ root
 
 version xD
 V0.4
-	*Agregar leyenda de cargos en empleados(Corregido)
+	
+ 	*Agregar leyenda de cargos en empleados(Corregido)
 
 	*Fix editar_prestamo, editar_empleado, editar_libro, editar_socio (Corregido)
+
 V1.35 (Mal nombrada, es 0.45)
 
 	*no se puede asignar variables largas a socios.email (Corregido)
@@ -39,7 +41,7 @@ v0.52
 	*Muestra el id del prestamo en lugar del id_empleado_prestamo_editar (Corregido)
 
 	*Modificar el formato que muestra la fecha_nacimiento en socios(Corregido)
-´
+
 	*Cargar fecha de registro en fecha_alta (Corregido)
 
 	*Modificar el formato fecha_alta (Corregido)
