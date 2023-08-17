@@ -10,16 +10,6 @@ app.get('/', (req,res)=>{
 });
 
 
-
-//************************      FUNCION FORMATEAR FECHA     dd/mm/aaaa      ************************* */
-
-function formatDate(dateString) {
-    var fechaOriginal = new Date(dateString);
-    var dia = ("0" + fechaOriginal.getDate()).slice(-2);
-    var mes = ("0" + (fechaOriginal.getMonth() + 1)).slice(-2);
-    var anio = fechaOriginal.getFullYear();
-    return dia + "/" + mes + "/" + anio;
-  }
 //********************************************************************************* */
 
 app.get('/socios', (req,res)=>{
@@ -37,8 +27,8 @@ app.post('/agregar_socio', (req,res)=> {
     const dni = req.body.dni;  
     const telefono = req.body.telefono;  
     const email = req.body.email;  
-    const fecha_nacimiento = req.body.fecha_nacimiento;  
-    const fecha_alta = req.body.fecha_alta;  
+    const fecha_alta = new Date();
+    const fecha_nacimiento = req.body.fecha_nacimiento || null;  
           
     const query = 'INSERT INTO socios (nombre, apellido, dni, telefono, email, fecha_nacimiento, fecha_alta) values (?, ?, ?, ?, ?, ?, ?)';        
  
@@ -406,16 +396,34 @@ app.get('/editar_libros/:id', (req,res)=>{
     const query='SELECT * FROM libros WHERE id_libro = ?';
     conexion.query(query,[id],(err,result)=>{
         if(err){
-            console.error('Error al editar el registro: ', err);
-            res.status(500).send('Error al editar el registro');
+            console.error('Error al editar el registro de libros: ', err);
+            res.status(500).send('Error al editar el registro de libros');
         }else{
-            console.log('Registro editado correctamente');
-            res.render('editar_libros',{
-            libro:result[0]
+            const autores = conexion.query('SELECT * FROM autores',(err,result2)=>{
+            if(err){
+                console.error('Error al consultar autores: ', err);
+                res.status(500).send('Error al consultar autores');
+            }else{
+                const generos = conexion.query('SELECT * FROM generos', (err,result3)=>{
+                    if(err){
+                        console.error('Error al consultar genero: ', err);
+                        res.status(500).send('Error al consultar genero');
+                    }else{
+                        console.log('Registro editado correctamente');
+                        res.render('editar_libros',{
+                        libro:result[0],
+                        autores: result2,
+                        generos: result3
+                        });
+                    }
             });
-        }
+            }; 
+            });
+            }
+        });
+
     });
-});
+    
 app.post('/editar_libros/:id', (req,res)=> {   
     const id = req.params.id;
     const titulo = req.body.editar_libro_titulo;

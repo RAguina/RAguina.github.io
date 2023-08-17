@@ -71,8 +71,21 @@
                 <td><%= socios[i].telefono %></td> 
                 <td><%= socios[i].dni %></td> 
                 <td><%= socios[i].email %></td> 
-                <td><%= socios[i].fecha_nacimiento %></td>
-                <td><%= socios[i].fecha_alta %></td> 
+                <td><% if (socios[i].fecha_nacimiento !== null) { %>
+                    <%= socios[i].fecha_nacimiento.toLocaleDateString() %>
+                <% } else { %>
+                    <!-- Manejo cuando la fecha_nacimiento es null -->
+                    Fecha de nacimiento no disponible
+                <% } %>
+                </td>
+                <td><% if (socios[i].fecha_alta !== null) { %>
+                    <%= socios[i].fecha_alta.toLocaleDateString() %>
+                <% } else { %>
+                    <!-- Manejo cuando la fecha_alta es null -->
+                    Fecha de Alta no disponible
+                <% } %>
+                
+                </td> 
                 <td>
                     <a href="/borrar_socio/<%= socios[i].id_socio %>" class="btn btn-danger">BORRAR</a>
                     <a href="/editar_socio/<%= socios[i].id_socio %>" class="btn btn-danger">EDITAR</a>

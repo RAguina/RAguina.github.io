@@ -43,6 +43,23 @@
             </div>
             <input type="submit" class="btn btn-primary my-4" value="Confirmar Cambios">
         </form>
+        <span class="fw-bold">LEYENDA AUTORES</span>
+            <% for(var i=0;i<autores.length;i++) { %>
+                <tr>
+                    <td>ID: "<%= autores[i].id_autor %>"</td>
+                    <td>NOMBRE: "<%= autores[i].nombre %> <%= autores[i].apellido %>"</td>
+                </tr>
+                <p>------------------------------------------</p>
+            <% } %>
+
+            <span class="fw-bold">LEYENDA GENEROS</span>
+            <% for(var i=0;i<generos.length;i++) { %>
+                <tr>
+                    <td>ID: "<%= generos[i].id_genero %>"</td>
+                    <td>NOMBRE: "<%= generos[i].nombre %> "</td>
+                </tr>
+                <p>------------------------------------------</p>
+            <% } %>
     </div>
 
 </body>
