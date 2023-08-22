@@ -50,14 +50,29 @@ v0.52
 
 	*si fecha_nacimiento es null = "Fecha de nacimiento no disponible" (Corregido) 	
 
-v0.54 (Actual)
+v0.54 
 
 	*Fix editar_generos, editar_cargos, editar_autores (Corregido)
 
 	*Agregar leyendas de autor y genero en editar_libro (Cooregido)
 
+v0.56 (Actual)
+
+	*Habia un error en editar_socio (Corregido)
+
+	*Se arreglo el error que no dejaba eliminar a un socio que hubiese sacado un prestamo(Corregido parcialmente)
+
+	*Se formateo el codigo para hacer mas comoda su legibilidad (Corregido)
+
+	*Probando sistema de validacion rudimentario
+
+	*Despedirse de declarar variables con snake_case y utilizar el camelCase siempre de ahora en mas (Corregido)
 	
 
-v0.56 (Proxima)
+v0.58 (Proxima)
 
 	*Agregar leyendas en el resto
+
+	*Agregarle margin-left a las leyendas en editar_libro
+
+	*Agregar libros>ejemplares.
