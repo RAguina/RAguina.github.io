@@ -5,13 +5,9 @@ const conexion = dbConnection();
 //********************************************************************************* */
 app.get('/', (req,res)=>{
     res.render('carga.ejs', {            
-    })       
-    
+    }) 
 });
-
-
-//********************************************************************************* */
-
+//***************       SOCIOS      ********************************************** */
 app.get('/socios', (req,res)=>{
     conexion.query('SELECT * FROM socios', (err, result)=>{
         res.render('socios.ejs', {
@@ -46,6 +42,17 @@ app.post('/agregar_socio', (req,res)=> {
 //********************************************************************************* */
 app.get('/borrar_socio/:id', (req, res)=> {
     const id= req.params.id;
+
+     // Eliminar de prestamos el socio
+     const queryPrestamos = 'DELETE FROM prestamos WHERE id_socio_prestamo = ?';
+
+     conexion.query(queryPrestamos, [id], (err, result) => {
+         if(err) {
+             console.error('Error al eliminar préstamos: ', err);
+             res.status(500).send('Error al eliminar préstamos');
+         } else {
+             console.log('Préstamos eliminados correctamente');
+
     const query = 'DELETE FROM socios WHERE id_socio = ?';
 
     conexion.query(query, [id], (err, result)=>{
@@ -56,11 +63,12 @@ app.get('/borrar_socio/:id', (req, res)=> {
             console.log('Registros editado correctamente');
             res.redirect('/socios');
             
+            }
+         }) 
         }
-    }) 
+     })
 });
 //********************************************************************************* */
-
 app.get('/editar_socio/:id', (req,res)=>{
     const id = req.params.id;
    
@@ -77,9 +85,7 @@ app.get('/editar_socio/:id', (req,res)=>{
         }
     });
 });
-
-
-
+//********************************************************************************* */
 app.post('/editar_socio/:id', (req,res)=> {    
    
     const id = req.params.id;
@@ -93,7 +99,7 @@ app.post('/editar_socio/:id', (req,res)=> {
     
     const query = 'UPDATE socios SET nombre = ?, apellido = ?, dni = ?, telefono = ?, email = ?  WHERE id_socio = ?';
 
-    conexion.query(query, [id, nombre, apellido, dni, telefono, email], (err, result) => {
+    conexion.query(query, [nombre, apellido, dni, telefono, email, id], (err, result) => {
         if(err) {
             console.error('Error al editar registro: ', err);
             res.status(500).send('Error al editar el registro');
@@ -104,8 +110,7 @@ app.post('/editar_socio/:id', (req,res)=> {
     })
     
 });
-
-//********************************************************************************* */
+//***************       EMPLEADOS      ********************************************** */
 app.get('/empleados', (req,res)=>{
     conexion.query('SELECT * FROM empleados', (err, result)=> {
         if (err) {
@@ -148,7 +153,7 @@ app.post('/agregar_empleado', (req,res)=> {
     })
     
 });
-
+//********************************************************************************* */
 app.get('/editar_empleados/:id', (req,res)=>{
     const id = req.params.id;
     conexion.query('SELECT * FROM empleados WHERE id_empleado = ?', [id], (err, result)=> {
@@ -170,8 +175,8 @@ app.get('/editar_empleados/:id', (req,res)=>{
         }
     });
 });
-
-/*
+//********************************************************************************* */
+/*PROBANDO
 app.get('/editar_empleados/:id', (req,res)=>{
     conexion.query('SELECT * FROM empleados', (err, result)=> {
         if (err) {
@@ -193,7 +198,7 @@ app.get('/editar_empleados/:id', (req,res)=>{
     });
 });
 */
-/*
+/*PROBANDO2
 app.get('/editar_empleados/:id', (req,res)=>{
     const id = req.params.id;
    
@@ -211,7 +216,6 @@ app.get('/editar_empleados/:id', (req,res)=>{
     });
 });
 */
-
 app.post('/editar_empleados/:id', (req,res)=> {   
     const id = req.params.id;
     const nombre = req.body.editar_empleado_nombre;
@@ -232,7 +236,6 @@ app.post('/editar_empleados/:id', (req,res)=> {
     })
     
 });
-
 //********************************************************************************* */
 app.get('/borrar_empleado/:id', (req, res)=> {
     const id= req.params.id;
@@ -249,7 +252,6 @@ app.get('/borrar_empleado/:id', (req, res)=> {
         }
     }) 
 });
-
 //*****************             CARGOS             ******************************** */
 app.get('/cargos', (req,res)=>{
     conexion.query('SELECT * FROM cargos', (err, result)=>{
@@ -307,6 +309,7 @@ app.get('/editar_cargo/:id', (req,res)=>{
         }
     });
 });
+//********************************************************************************* */
 app.post('/editar_cargo', (req,res)=> {   
     const id = req.body.id;
     const nombre = req.body.editar_cargo_nombre;
@@ -324,7 +327,7 @@ app.post('/editar_cargo', (req,res)=> {
     })
 
 });
-//**************       LIBROS       *********************************************** */
+//***************       LIBROS      ********************************************** */
 app.get('/libros', (req, res) => {
     conexion.query('SELECT * FROM libros', (err, result) => {
         if (err) {
@@ -423,7 +426,7 @@ app.get('/editar_libros/:id', (req,res)=>{
         });
 
     });
-    
+
 app.post('/editar_libros/:id', (req,res)=> {   
     const id = req.params.id;
     const titulo = req.body.editar_libro_titulo;
@@ -507,7 +510,7 @@ app.post('/editar_autor', (req,res)=> {
     })
     
 });
-//********************************************************************************* */
+//***************       GENEROS      ********************************************** */
 app.get('/generos', (req,res)=>{
     conexion.query('SELECT * FROM generos', (err, result)=>{
         res.render('generos.ejs', {
@@ -515,7 +518,6 @@ app.get('/generos', (req,res)=>{
         });
     });
 });
-
 app.post('/agregar_genero', (req,res)=> {   
     const nombre = req.body.nombre;  
 
@@ -565,7 +567,7 @@ app.post('/editar_genero', (req,res)=> {
     })
     
 });
-//********************************************************************************* */
+//***************       PRESTAMOS      ********************************************** */
 app.get('/form_prestamo', (req, res) => {
     conexion.query('SELECT * FROM empleados', (err, result) => {
         if (err) {
@@ -594,7 +596,6 @@ app.get('/form_prestamo', (req, res) => {
         }
     });
 });
-
 //********************************************************************************* */
 app.get('/prestamos', (req,res)=>{
     conexion.query('SELECT prestamos.id_prestamo, prestamos.id_libro_prestamo, prestamos.id_socio_prestamo, prestamos.id_empleado_prestamo, prestamos.fecharetiro, libros.titulo, libros.autor, socios.nombre AS socio_nombre, socios.apellido AS socio_apellido, empleados.nombre AS empleado_nombre, empleados.apellido AS empleado_apellido FROM prestamos INNER JOIN libros ON prestamos.id_libro_prestamo = libros.id_libro INNER JOIN socios ON prestamos.id_socio_prestamo = socios.id_socio INNER JOIN empleados ON prestamos.id_empleado_prestamo = empleados.id_empleado', (err, result)=> {
@@ -646,7 +647,6 @@ app.post('/agregar_prestamo', (req,res)=> {
     })       
 });
 //********************************************************************************* */
-
 app.get('/editar_prestamo/:id', (req, res) => {
     const id = req.params.id;
    
@@ -674,7 +674,7 @@ app.get('/editar_prestamo/:id', (req, res) => {
         }
     });
 });
-
+//********************************************************************************* */
 app.post('/editar_prestamo/:id', (req,res)=> {           
 
     const id = req.params.id;
@@ -696,9 +696,7 @@ app.post('/editar_prestamo/:id', (req,res)=> {
     })
     
 });
-
 //********************************************************************************* */
-
 app.get('/devolucion/:id', (req, res)=> {
     const id= req.params.id;
     const query = 'DELETE FROM prestamos WHERE id_prestamo = ?';
