@@ -19,6 +19,7 @@ V0.4
  	*Agregar leyenda de cargos en empleados(Corregido)
 
 	*Fix editar_prestamo, editar_empleado, editar_libro, editar_socio (Corregido)
+
 V1.35 (Mal nombrada, es 0.45)
 
 	*no se puede asignar variables largas a socios.email (Corregido)
@@ -35,12 +36,12 @@ v0.5b
 
 	*Detalles en la UI y descripciones (Corregido)
 
-v0.52 (Actual)
+v0.52
 	
 	*Muestra el id del prestamo en lugar del id_empleado_prestamo_editar (Corregido)
 
 	*Modificar el formato que muestra la fecha_nacimiento en socios(Corregido)
-	
+
 	*Cargar fecha de registro en fecha_alta (Corregido)
 
 	*Modificar el formato fecha_alta (Corregido)
@@ -49,10 +50,14 @@ v0.52 (Actual)
 
 	*si fecha_nacimiento es null = "Fecha de nacimiento no disponible" (Corregido) 	
 
-v0.54 (Proxima)
+v0.54 (Actual)
 
- 	*Fix editar_generos, editar_cargos, editar_autores
+	*Fix editar_generos, editar_cargos, editar_autores (Corregido)
 
-	*Agregar leyendas de autor y genero en editar_libro
+	*Agregar leyendas de autor y genero en editar_libro (Cooregido)
+
+	
+
+v0.56 (Proxima)
 
 	*Agregar leyendas en el resto
